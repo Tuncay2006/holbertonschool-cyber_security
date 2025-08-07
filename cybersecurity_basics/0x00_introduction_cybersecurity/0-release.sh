@@ -1,2 +1,2 @@
 #!/bin/bash
-grep '^DISTRIB_ID=' /etc/lsb-release | cut -d= -f2
+lsb_release -i | cut -f2
