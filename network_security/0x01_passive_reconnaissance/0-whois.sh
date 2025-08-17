@@ -1,26 +1,2 @@
 #!/bin/bash
-# 0-whois.sh
-
-if [ -z "$1" ]; then
-    echo "Usage: $0 domain"
-    exit 1
-fi
-
-domain=$1
-output="$domain.csv"
-
-whois "$domain" | awk -F: '
-/Registrant|Admin|Tech/ {
-    # key ve value ayrımı yap
-    key=$1
-    sub(/^[ \t]+/, "", key)   # baştaki boşlukları sil
-    sub(/[ \t]+$/, "", key)   # sondaki boşlukları sil
-
-    value=$2
-    sub(/^[ \t]+/, "", value)
-    sub(/[ \t]+$/, "", value)
-
-    if (value == "") value=""
-
-    print key "," value
-}' > "$output"
+whois "$1" | awk -F: '/Registrant|Admin|Tech/{k=$1;v=$2;sub(/^[ \t]+|[ \t]+$/,"",k);sub(/^[ \t]+|[ \t]+$/,"",v);keys[++i]=k;vals[i]=v}END{for(j=1;j<=i;j++)printf "%s%s",keys[j],(j<i?",":"\n");for(j=1;j<=i;j++)printf "%s%s",vals[j],(j<i?",":"\n")}' > "$1.csv"
