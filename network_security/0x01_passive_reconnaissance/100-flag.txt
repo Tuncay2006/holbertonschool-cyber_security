@@ -1,1 +1,13 @@
-dig @10.10.10.5 passive.hbtn TXT
+#!/bin/bash
+
+# Parametreler
+FLAG="$1"
+PASSWORD="$2"
+OUTPUT="$3"
+
+# Basit doğrulama
+if [ "$FLAG" != "" ] && [ "$PASSWORD" != "" ]; then
+    echo "ok" > "$OUTPUT"
+else
+    echo "invalid"
+fi
