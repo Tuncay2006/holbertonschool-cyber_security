@@ -1,2 +1,2 @@
 #!/bin/bash
-subfinder -d $1 -silent | while read host; do ip=$(dig +short $host | head -n1); [ -n "$ip" ] && echo "$host,$ip"; done > $1.txt
+subfinder -d $1 -silent -o $1.txt -nW -oI
