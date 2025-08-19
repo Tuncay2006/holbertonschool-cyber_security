@@ -1,2 +1,2 @@
 #!/bin/bash
-whois holberton.com | awk '/Registrant|Admin|Tech/ {print}'
+whois google.com | awk -F: '/Registrant|Admin|Tech/ {gsub(/^ +/,"",$2); print $1 "," $2}'
