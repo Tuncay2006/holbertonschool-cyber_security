@@ -1,11 +1,1 @@
-#!/bin/bash
-
-FLAG="$1"
-PASSWORD="$2"
-OUTPUT="$3"
-
-if [ "$FLAG" == "NMSR8V8Y9B2UOLBG" ] && [ "$PASSWORD" == "Tuncay2006" ]; then
-    echo "ok" > "$OUTPUT"
-else
-    echo "invalid"
-fi
+bc41162998d0f50aa29b2126081fb69d
