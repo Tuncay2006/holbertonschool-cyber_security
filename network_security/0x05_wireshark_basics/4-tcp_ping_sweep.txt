@@ -1,1 +1,1 @@
-tcp.flags == 0x001 and tcp.len == 0
+(tcp.flags == 0x002 and tcp.len == 0) or (tcp.flags == 0x010 and tcp.len == 0)
