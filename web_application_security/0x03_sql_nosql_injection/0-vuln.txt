@@ -1,1 +1,3 @@
-search bar
+search
+customer
+status
