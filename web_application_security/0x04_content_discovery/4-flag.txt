@@ -1,1 +1,1 @@
-DKFIDE4848D2D
+Flag{Hidden_Secret}
