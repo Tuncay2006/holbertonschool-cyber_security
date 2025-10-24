@@ -1,2 +1,2 @@
 #!/bin/bash
-lsb_release -i | cut -d':' -f2 | sed 's/^[ \t]*//'
+lsb_release -i | tr -d '[:space:]' | cut -d: -f2
