@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo seinfo -u -x
+sudo semanage login -l
