@@ -1,1 +1,1 @@
-drtrdyftöyluf
+bıraz dincelmek isdiyrem
