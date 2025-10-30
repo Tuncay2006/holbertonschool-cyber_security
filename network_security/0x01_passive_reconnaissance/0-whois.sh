@@ -1,2 +1,2 @@
 #!/bin/bash
-(whois -h whois.gandi.net "$1" 2>/dev/null || cat "$1" 2>/dev/null) | awk -F': ' '/^Registrant |^Admin |^Tech /{gsub(/^ +| +$/,"",$2); if($1~/Street$/)$2=$2" "; if($1~/Ext$/)sub(/Ext$/,"Ext:"); print $1","$2}' > "$1.csv"
+whois "$1" | awk -F: '/Registrant|Admin|Tech/ {gsub(/^[ \t]+|[ \t]+$/,"",$2); f=$1; gsub(/^[ \t]+|[ \t]+$/,"",f); if(f~/Street/){a[f]=$2" "}; print f","$2}' > "$1.csv"
