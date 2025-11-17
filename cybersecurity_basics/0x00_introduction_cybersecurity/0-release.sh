@@ -1,2 +1,2 @@
 #!/bin/bash
-lsb_release -i | tr -d '[:space:]' | cut -d: -f2
+lsb_release -i -s 2>/dev/null || grep -m1 '^ID=' /etc/os-release | cut -d= -f2 | tr -d '"'
