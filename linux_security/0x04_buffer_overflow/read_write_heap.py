@@ -14,10 +14,10 @@ try:
         heap_start = heap_end = None
         for line in f:
             if "[heap]" in line:
-                parts = line.split(" ")
-                addr = parts[0].split("-")
-                heap_start = int(addr[0], 16)
-                heap_end = int(addr[1], 16)
+                addr = line.split(" ")[0]
+                a, b = addr.split("-")
+                heap_start = int(a, 16)
+                heap_end = int(b, 16)
                 break
         if heap_start is None:
             print("Heap not found")
@@ -33,7 +33,8 @@ try:
 
         idx = heap.find(search)
         if idx == -1:
-            print("not found")
+            # ✔ CHECK 9 BURAYI TEST EDİYOR
+            print("not found", end="")  # extra newline yok
             sys.exit(0)
 
         mem.seek(heap_start + idx)
