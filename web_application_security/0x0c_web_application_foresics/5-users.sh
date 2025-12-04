@@ -1,6 +1,6 @@
 #!/bin/bash
-grep -Ei "useradd|new user|added user|account created|creating user" auth.log \
-| grep -oE "[A-Za-z0-9_-]+" \
-| grep -Ev "useradd|user|new|added|account|created|creating|uid|gid|shell|sudo|by|for|from|session" \
+grep -i "new user" auth.log \
+| grep -oE "name=[^,]+" \
+| cut -d= -f2 \
 | sort -u \
 | paste -sd, -
