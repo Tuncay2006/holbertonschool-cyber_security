@@ -1,2 +1,2 @@
 #!/bin/bash
-grep -i "iptables" auth.log | wc -l
+grep -Ei "iptables.*-A|ufw.*added|firewall:.*add" auth.log | wc -l
