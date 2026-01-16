@@ -7,11 +7,15 @@ FileUtils.touch(TASKS_FILE)
 
 options = {}
 
-help_text = <<~HELP
+HELP_TEXT = <<~HELP
 Usage: cli.rb [options]
+
 -a, --add TASK Add a new task
+
 -l, --list List all tasks
+
 -r, --remove INDEX Remove a task by index
+
 -h, --help Show help
 HELP
 
@@ -20,7 +24,7 @@ OptionParser.new do |opts|
   opts.on("-l", "--list") { options[:list] = true }
   opts.on("-r", "--remove INDEX") { |i| options[:remove] = i.to_i }
   opts.on("-h", "--help") do
-    puts help_text
+    puts HELP_TEXT
     exit 0
   end
 end.parse!
@@ -41,5 +45,5 @@ elsif options[:remove]
   puts "Task ‘#{removed}’ removed."
 
 else
-  puts help_text
+  puts HELP_TEXT
 end
