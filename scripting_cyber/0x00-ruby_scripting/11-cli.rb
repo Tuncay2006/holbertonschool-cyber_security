@@ -7,14 +7,19 @@ FileUtils.touch(TASKS_FILE)
 
 options = {}
 
-HELP_TEXT = "Usage: cli.rb [options]\n" \
-"-a, --add TASK                   Add a new task\n" \
-"-l, --list                       List all tasks\n" \
-"-r, --remove INDEX               Remove a task by index\n" \
-"-h, --help                       Show help\n"
+HELP_TEXT = <<~HELP
+Usage: cli.rb [options]
+
+-a, --add TASK                   Add a new task
+
+-l, --list                       List all tasks
+
+-r, --remove INDEX               Remove a task by index
+
+-h, --help                       Show help
+HELP
 
 OptionParser.new do |opts|
-  # Dummy banner, we will print exact HELP_TEXT manually
   opts.banner = "Usage: cli.rb [options]"
 
   opts.on("-a", "--add TASK") { |t| options[:add] = t }
