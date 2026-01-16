@@ -10,14 +10,14 @@ def get_request(url)
   # Status
   puts "Response status: #{response.code} #{response.message}\n\n"
 
-  # Body
+  # Response body in JSON format
   begin
     json_body = JSON.parse(response.body)
-    # JSON.pretty_generate default olarak \n ekler. Sonundaki \n'yi kaldır
+    # Sonundaki ekstra newline'i chomp ile kaldırıyoruz
     body_str = JSON.pretty_generate(json_body).chomp
     puts "Response body:\n\n#{body_str}"
   rescue JSON::ParserError
-    # JSON değilse raw body
+    # Eğer JSON değilse raw body yaz
     puts "Response body:\n\n#{response.body.chomp}"
   end
 end
