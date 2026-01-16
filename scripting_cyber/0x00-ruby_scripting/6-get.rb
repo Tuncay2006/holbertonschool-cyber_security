@@ -7,16 +7,17 @@ def get_request(url)
   uri = URI.parse(url)
   response = Net::HTTP.get_response(uri)
 
-  # Response status
+  # Status
   puts "Response status: #{response.code} #{response.message}\n\n"
 
-  # Response body in JSON format
+  # Body
   begin
     json_body = JSON.parse(response.body)
-    print "Response body:\n\n#{JSON.pretty_generate(json_body)}"
+    # JSON.pretty_generate default olarak \n ekler. Sonundaki \n'yi kaldır
+    body_str = JSON.pretty_generate(json_body).chomp
+    puts "Response body:\n\n#{body_str}"
   rescue JSON::ParserError
-    # Eğer JSON değilse, raw body yaz
-    print "Response body:\n\n#{response.body}"
+    # JSON değilse raw body
+    puts "Response body:\n\n#{response.body.chomp}"
   end
 end
-
