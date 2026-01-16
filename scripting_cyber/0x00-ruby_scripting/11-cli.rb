@@ -1,35 +1,29 @@
 #!/usr/bin/env ruby
 require 'optparse'
+require 'fileutils'
 
 TASKS_FILE = 'tasks.txt'
-
-# Ensure tasks file exists
-FileUtils.touch(TASKS_FILE) unless File.exist?(TASKS_FILE)
+FileUtils.touch(TASKS_FILE)
 
 options = {}
 
-parser = OptionParser.new do |opts|
-  opts.banner = "Usage: cli.rb [options]"
+help_text = <<~HELP
+Usage: cli.rb [options]
+-a, --add TASK Add a new task
+-l, --list List all tasks
+-r, --remove INDEX Remove a task by index
+-h, --help Show help
+HELP
 
-  opts.on("-a", "--add TASK", "Add a new task") do |task|
-    options[:add] = task
+OptionParser.new do |opts|
+  opts.on("-a", "--add TASK") { |task| options[:add] = task }
+  opts.on("-l", "--list") { options[:list] = true }
+  opts.on("-r", "--remove INDEX") { |i| options[:remove] = i.to_i }
+  opts.on("-h", "--help") do
+    puts help_text
+    exit 0
   end
-
-  opts.on("-l", "--list", "List all tasks") do
-    options[:list] = true
-  end
-
-  opts.on("-r", "--remove INDEX", "Remove a task by index") do |index|
-    options[:remove] = index.to_i
-  end
-
-  opts.on("-h", "--help", "Show help") do
-    puts opts
-    exit
-  end
-end
-
-parser.parse!
+end.parse!
 
 tasks = File.readlines(TASKS_FILE, chomp: true)
 
@@ -37,15 +31,15 @@ if options[:add]
   tasks << options[:add]
   File.write(TASKS_FILE, tasks.join("\n") + "\n")
   puts "Task ‘#{options[:add]}’ added."
+
 elsif options[:list]
-  tasks.each { |task| puts task }
+  tasks.each { |t| puts t }
+
 elsif options[:remove]
-  index = options[:remove] - 1
-  if index >= 0 && index < tasks.length
-    removed = tasks.delete_at(index)
-    File.write(TASKS_FILE, tasks.join("\n") + (tasks.empty? ? "" : "\n"))
-    puts "Task ‘#{removed}’ removed."
-  end
+  removed = tasks.delete_at(options[:remove] - 1)
+  File.write(TASKS_FILE, tasks.join("\n") + (tasks.empty? ? "" : "\n"))
+  puts "Task ‘#{removed}’ removed."
+
 else
-  puts parser
+  puts help_text
 end
