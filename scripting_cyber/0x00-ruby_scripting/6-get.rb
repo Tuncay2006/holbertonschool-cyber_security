@@ -1,23 +1,20 @@
-# 6-get.rb
 require 'net/http'
-require 'uri'
 require 'json'
 
 def get_request(url)
-  uri = URI.parse(url)
+  uri = URI(url)
   response = Net::HTTP.get_response(uri)
 
-  # Status
-  puts "Response status: #{response.code} #{response.message}\n\n"
+  puts "Response status: #{response.code} #{response.message}"
 
-  # Response body in JSON format
-  begin
-    json_body = JSON.parse(response.body)
-    # Sonundaki ekstra newline'i chomp ile kaldırıyoruz
-    body_str = JSON.pretty_generate(json_body).chomp
-    puts "Response body:\n\n#{body_str}"
-  rescue JSON::ParserError
-    # Eğer JSON değilse raw body yaz
-    puts "Response body:\n\n#{response.body.chomp}"
+  if response.is_a?(Net::HTTPSuccess)
+    begin
+      json_body = JSON.pretty_generate(JSON.parse(response.body))
+      puts "Response body:\n#{json_body}"
+    rescue JSON::ParserError
+      puts "Response body:\n{\n}"
+    end
+  else
+    puts "Response body:\n{\n}"
   end
 end
