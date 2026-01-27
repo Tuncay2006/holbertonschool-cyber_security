@@ -29,7 +29,7 @@ opt_parser = OptionParser.new do |opts|
   end
 end
 
-# Parse arguments safely
+# Parse arguments
 begin
   opt_parser.parse!
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
@@ -46,7 +46,7 @@ if options[:add]
   puts "Task '#{options[:add]}' added."
 end
 
-# List tasks (CHECKER COMPATIBLE)
+# List tasks (EXACT OUTPUT)
 if options[:list]
   tasks = File.readlines(TASK_FILE).map(&:strip)
 
@@ -56,6 +56,7 @@ if options[:list]
     puts "Tasks:"
     puts
     tasks.each { |task| puts task }
+    puts
   end
 end
 
