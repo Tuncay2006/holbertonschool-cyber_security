@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 require 'optparse'
 
+# Define the file where tasks will be stored
 TASK_FILE = "tasks.txt"
 
-# Ensure the file exists
+# Ensure the file exists so read operations don't fail
 File.open(TASK_FILE, 'a') {}
 
 options = {}
@@ -29,7 +30,7 @@ opt_parser = OptionParser.new do |opts|
   end
 end
 
-# Parse arguments safely
+# Parse the command line arguments
 begin
   opt_parser.parse!
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
@@ -38,7 +39,7 @@ rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
   exit 1
 end
 
-# Add task
+# Logic for Adding a Task
 if options[:add]
   File.open(TASK_FILE, "a") do |f|
     f.puts options[:add]
@@ -46,23 +47,20 @@ if options[:add]
   puts "Task '#{options[:add]}' added."
 end
 
-# List tasks (CHECKER COMPATIBLE)
+# Logic for Listing Tasks
 if options[:list]
-  tasks = File.readlines(TASK_FILE).map(&:strip)
-
+  tasks = File.readlines(TASK_FILE)
   if tasks.empty?
     puts "No tasks found."
   else
-    puts "Tasks:"
-    puts
-    tasks.each { |task| puts task }
+    puts tasks.map(&:strip)
   end
 end
 
-# Remove task
+# Logic for Removing a Task
 if options[:remove]
   tasks = File.readlines(TASK_FILE)
-  index = options[:remove] - 1
+  index = options[:remove] - 1 # Convert to 0-based index
 
   if index >= 0 && index < tasks.length
     removed_task = tasks.delete_at(index).strip
