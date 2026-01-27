@@ -1,10 +1,15 @@
-# 3-read_file.rb
 require 'json'
 
-def read_json_file(file_path)
-  if File.exist?(file_path)
-    JSON.parse(File.read(file_path))
-  else
-    [] # Dosya yoksa boş array döndür
+def count_user_ids(path)
+  data = JSON.parse(File.read(path))
+
+  counts = Hash.new(0)
+
+  data.each do |item|
+    counts[item["userId"]] += 1
+  end
+
+  counts.each do |user_id, count|
+    puts "#{user_id}: #{count}"
   end
 end
